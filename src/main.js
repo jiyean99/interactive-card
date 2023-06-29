@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GUI } from 'lil-gui'
 import Card from './card.js'
+import { viewportBottomLeft } from 'three/nodes'
 
 window.addEventListener('load', function() {
   init()
@@ -9,6 +10,8 @@ window.addEventListener('load', function() {
 
 function init() {
   const gui = new GUI()
+
+  const COLORS = ['#ff6e6e', '#31e0c1', '#006fff', '#ffd732']
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true, // 배경 투명하게 처리하는 코드
@@ -47,7 +50,7 @@ function init() {
     width: 10,
     height: 15.8,
     radius: 0.5,
-    color: '#0077ff',
+    color: COLORS[0],
   })
 
   card.mesh.rotation.z = Math.PI * 0.08
@@ -105,4 +108,18 @@ function init() {
   }
 
   window.addEventListener('resize', handleResize)
+
+  const container = document.querySelector('.container')
+
+  COLORS.forEach(color => {
+    const button = document.createElement('button')
+
+    button.style.backgroundColor = color
+
+    button.addEventListener('click',() => {
+      card.mesh.material.color = new THREE.Color(color)
+    })
+
+    container.appendChild(button)
+  })
 }
