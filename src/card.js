@@ -21,7 +21,10 @@ class Card {
       .lineTo(-(x + radius), y, radius, Math.PI, Math.PI / 2, true) // 좌측면
       .absarc(-x, y, radius, Math.PI, Math.PI / 2, true)// 4사분면방향의 코너
 
-    const geometry = new THREE.ShapeGeometry(shape)
+    const geometry = new THREE.ExtrudeGeometry(shape,{
+      depth: 0.01,
+      bevelThickness: 0.1, // 경사면의 둥근면 제거
+    })
     const meterial = new THREE.MeshStandardMaterial({
       color,
       side: THREE.DoubleSide, //기본은 단면만 렌더링되므로 양면렌더링 추가하는 코드
